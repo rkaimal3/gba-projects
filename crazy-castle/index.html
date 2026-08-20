@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-
   <title>Crazy Castle</title>
 
   <style>
@@ -34,14 +33,20 @@
     EJS_core = "gba";
     EJS_gameName = "Crazy Castle";
     EJS_gameUrl = "./Project.gba";
-    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+    EJS_pathtodata =
+      "https://cdn.emulatorjs.org/stable/data/";
 
     EJS_startOnLoaded = false;
-
     EJS_backgroundImage = "./cover.png";
     EJS_backgroundBlur = false;
-
     EJS_startButtonName = "CLICK TO PLAY";
+
+    EJS_defaultOptions = {
+      "mgba_idle_optimization": "Detect and Remove",
+      "mgba_frameskip": "0",
+      "vsync": "disabled",
+      "slowMotion": "disabled"
+    };
   </script>
 
   <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
