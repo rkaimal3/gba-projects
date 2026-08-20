@@ -22,101 +22,6 @@
       height: 100vh;
       background: #000;
     }
-
-    /*
-      Restyle EmulatorJS's REAL start button.
-
-      This is important:
-      we are NOT covering it or programmatically clicking it anymore.
-      The visitor clicks EmulatorJS's actual start control.
-    */
-    .ejs_start_button {
-      /*
-        Remove EmulatorJS's blue button styling
-      */
-      background: transparent !important;
-      background-color: transparent !important;
-
-      border: none !important;
-      box-shadow: none !important;
-
-      width: auto !important;
-      height: auto !important;
-
-      padding: 0 !important;
-      margin: 0 !important;
-
-      /*
-        Position it in the orange space between
-        the Crazy Castle logo and bottom brick border
-      */
-      top: 78% !important;
-      bottom: auto !important;
-
-      left: 50% !important;
-      right: auto !important;
-
-      transform: translate(-50%, -50%) !important;
-
-      /*
-        Retro text treatment
-      */
-      color: #fff !important;
-
-      font-family:
-        "Courier New",
-        Courier,
-        monospace !important;
-
-      font-size: clamp(18px, 2.8vw, 32px) !important;
-      font-weight: 900 !important;
-
-      letter-spacing: 0.1em !important;
-
-      white-space: nowrap !important;
-
-      text-shadow:
-        3px 3px 0 #000,
-        -2px -2px 0 #000,
-        2px -2px 0 #000,
-        -2px 2px 0 #000 !important;
-
-      cursor: pointer !important;
-
-      /*
-        Old-school blinking start prompt
-      */
-      animation:
-        blinkStart 1.05s steps(1, end) infinite !important;
-    }
-
-    /*
-      EmulatorJS also adds this class.
-      Kill its default border treatment.
-    */
-    .ejs_start_button_border {
-      border: none !important;
-      box-shadow: none !important;
-      background: transparent !important;
-    }
-
-    @keyframes blinkStart {
-      0%,
-      64% {
-        opacity: 1;
-      }
-
-      65%,
-      100% {
-        opacity: 0;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .ejs_start_button {
-        animation: none !important;
-      }
-    }
   </style>
 </head>
 
@@ -125,45 +30,21 @@
   <div id="game"></div>
 
   <script>
-    /*
-      NORMAL EmulatorJS setup.
-
-      No custom click handlers.
-      No synthetic button clicks.
-      No overlay sitting above the emulator.
-    */
-
     EJS_player = "#game";
     EJS_core = "gba";
-
     EJS_gameName = "Crazy Castle";
     EJS_gameUrl = "./Project.gba";
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
 
-    EJS_pathtodata =
-      "https://cdn.emulatorjs.org/stable/data/";
-
-    /*
-      Let EmulatorJS handle startup normally.
-    */
     EJS_startOnLoaded = false;
 
-    /*
-      Use your screenshot as EmulatorJS's
-      native start-screen artwork.
-    */
     EJS_backgroundImage = "./cover.png";
     EJS_backgroundBlur = false;
-    EJS_backgroundColor = "#000";
 
-    /*
-      This text is the REAL EmulatorJS start button.
-    */
     EJS_startButtonName = "CLICK TO PLAY";
   </script>
 
-  <script
-    src="https://cdn.emulatorjs.org/stable/data/loader.js">
-  </script>
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
 </body>
 </html>
