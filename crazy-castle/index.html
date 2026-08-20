@@ -1,55 +1,132 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
   <title>Crazy Castle</title>
 
   <style>
+
     html,
     body {
       margin: 0;
       padding: 0;
+
       width: 100%;
       height: 100%;
+
       overflow: hidden;
+
       background: #000;
     }
+
 
     #game {
       width: 100vw;
       height: 100vh;
+
       background: #000;
     }
+
   </style>
 </head>
+
 
 <body>
 
   <div id="game"></div>
 
+
   <script>
+
+    /*
+      --------------------------------
+      EMULATORJS SETUP
+      --------------------------------
+    */
+
     EJS_player = "#game";
+
     EJS_core = "gba";
+
     EJS_gameName = "Crazy Castle";
+
     EJS_gameUrl = "./Project.gba";
+
     EJS_pathtodata =
       "https://cdn.emulatorjs.org/stable/data/";
 
+
+    /*
+      --------------------------------
+      START SCREEN
+      --------------------------------
+
+      Let EmulatorJS handle startup
+      normally instead of automatically
+      starting the ROM.
+    */
+
     EJS_startOnLoaded = false;
+
+
+    /*
+      Use our Crazy Castle artwork as
+      the native EmulatorJS start screen.
+    */
+
     EJS_backgroundImage = "./cover.png";
+
     EJS_backgroundBlur = false;
+
     EJS_startButtonName = "CLICK TO PLAY";
 
+
+    /*
+      --------------------------------
+      PERFORMANCE
+      --------------------------------
+
+      "Remove Known" is the more
+      conservative mGBA optimization.
+
+      This avoids the aggressive
+      "Detect and Remove" setting that
+      improved speed but caused buggy
+      gameplay behavior.
+
+      Frameskip remains at 0 so the
+      emulator targets the normal
+      frame rate rather than skipping
+      frames.
+    */
+
     EJS_defaultOptions = {
-      "mgba_idle_optimization": "Detect and Remove",
-      "mgba_frameskip": "0",
-      "vsync": "disabled",
-      "slowMotion": "disabled"
+
+      "mgba_idle_optimization": "Remove Known",
+
+      "mgba_frameskip": "0"
+
     };
+
   </script>
 
-  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+
+  <!--
+    Load EmulatorJS normally.
+  -->
+
+  <script
+    src="https://cdn.emulatorjs.org/stable/data/loader.js">
+  </script>
+
 
 </body>
+
 </html>
