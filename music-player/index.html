@@ -35,19 +35,17 @@
     EJS_gameUrl = "./Project.gba";
     EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
 
-    /*
-      IMPORTANT:
-      Do not auto-start.
-      Let EmulatorJS wait for the visitor to click,
-      so the browser can initialize audio normally.
-    */
+    // Keep native click-to-start behavior so audio initializes correctly.
     EJS_startOnLoaded = false;
 
-    /*
-      Use EmulatorJS's own start control instead of
-      our custom cover/start logic.
-    */
+    // Use your custom title screen.
+    EJS_backgroundImage = "./cover.png";
+    EJS_backgroundBlur = false;
+    EJS_backgroundColor = "#000";
+
+    // Native EmulatorJS start button.
     EJS_startButtonName = "CLICK TO PLAY";
+    EJS_alignStartButton = "center";
   </script>
 
   <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
