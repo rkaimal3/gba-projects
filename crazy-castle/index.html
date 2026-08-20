@@ -13,7 +13,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: transparent;
+      background: #000;
     }
 
     #game-shell {
@@ -27,6 +27,15 @@
     #game {
       width: 100%;
       height: 100%;
+    }
+
+    /*
+      Keep EmulatorJS's real start button available
+      but make it invisible.
+    */
+    .ejs_start_button {
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
 
     #cover {
@@ -60,7 +69,7 @@
     #click-to-play {
       position: absolute;
 
-      /* Centered in the orange space below the logo */
+      /* Approved placement in the orange space */
       top: 78%;
       left: 50%;
 
@@ -68,7 +77,6 @@
       z-index: 10000;
 
       color: #fff;
-
       font-family: "Courier New", Courier, monospace;
       font-weight: 900;
       font-size: clamp(18px, 2.8vw, 32px);
@@ -128,84 +136,86 @@
 
   <script>
     /*
-      Keep the same EmulatorJS settings as the
-      working Crazy Castle page.
+      Native EmulatorJS setup.
+      Do NOT auto-start.
     */
 
-    window.EJS_player = "#game";
-    window.EJS_core = "gba";
-    window.EJS_gameName = "Crazy Castle";
-    window.EJS_gameUrl = "./Project.gba";
-    window.EJS_pathtodata =
+    EJS_player = "#game";
+    EJS_core = "gba";
+    EJS_gameName = "Crazy Castle";
+    EJS_gameUrl = "./Project.gba";
+    EJS_pathtodata =
       "https://cdn.emulatorjs.org/stable/data/";
 
-    window.EJS_startOnLoaded = true;
+    EJS_startOnLoaded = false;
+    EJS_startButtonName = "CLICK TO PLAY";
+  </script>
+
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
 
-    /*
-      Do NOT load EmulatorJS until the visitor
-      actually clicks the cover.
-    */
+  <script>
+    const cover =
+      document.getElementById("cover");
 
-    (function () {
-
-      const cover =
-        document.getElementById("cover");
-
-      let loaded = false;
+    let started = false;
 
 
-      function startGame() {
+    function startGame() {
 
-        if (loaded) return;
+      if (started) return;
 
-        loaded = true;
-
-        /*
-          Remove the cover.
-        */
-
-        cover.remove();
+      const nativeButton =
+        document.querySelector(".ejs_start_button");
 
 
-        /*
-          Load the exact same EmulatorJS loader
-          that the original page used.
-        */
+      /*
+        EmulatorJS may not have generated its
+        start button yet, so wait until it exists.
+      */
 
-        const loader =
-          document.createElement("script");
-
-        loader.src =
-          "https://cdn.emulatorjs.org/stable/data/loader.js";
-
-        document.body.appendChild(loader);
+      if (!nativeButton) {
+        setTimeout(startGame, 50);
+        return;
       }
 
 
-      cover.addEventListener(
-        "click",
-        startGame
-      );
+      started = true;
+
+      /*
+        Trigger EmulatorJS's own startup.
+      */
+
+      nativeButton.click();
+
+      /*
+        Then remove our custom title screen.
+      */
+
+      cover.remove();
+    }
 
 
-      cover.addEventListener(
-        "keydown",
-        function (event) {
+    cover.addEventListener(
+      "click",
+      startGame
+    );
 
-          if (
-            event.key === "Enter" ||
-            event.key === " "
-          ) {
 
-            event.preventDefault();
+    cover.addEventListener(
+      "keydown",
+      function (event) {
 
-            startGame();
-          }
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+          startGame();
         }
-      );
-
-    })();
+      }
+    );
   </script>
 
 </body>
