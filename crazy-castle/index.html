@@ -12,7 +12,6 @@
   <title>Crazy Castle</title>
 
   <style>
-
     html,
     body {
       margin: 0;
@@ -22,18 +21,14 @@
       height: 100%;
 
       overflow: hidden;
-
       background: #000;
     }
-
 
     #game {
       width: 100vw;
       height: 100vh;
-
       background: #000;
     }
-
   </style>
 </head>
 
@@ -44,12 +39,6 @@
 
 
   <script>
-
-    /*
-      --------------------------------
-      EMULATORJS SETUP
-      --------------------------------
-    */
 
     EJS_player = "#game";
 
@@ -64,21 +53,15 @@
 
 
     /*
-      --------------------------------
-      START SCREEN
-      --------------------------------
-
-      Let EmulatorJS handle startup
-      normally instead of automatically
-      starting the ROM.
+      Let EmulatorJS handle startup normally.
     */
 
     EJS_startOnLoaded = false;
 
 
     /*
-      Use our Crazy Castle artwork as
-      the native EmulatorJS start screen.
+      Use your Crazy Castle cover as the native
+      EmulatorJS start screen.
     */
 
     EJS_backgroundImage = "./cover.png";
@@ -89,38 +72,29 @@
 
 
     /*
-      --------------------------------
       PERFORMANCE
-      --------------------------------
 
-      "Remove Known" is the more
-      conservative mGBA optimization.
+      Keep mGBA's conservative idle-loop handling
+      so our custom game logic isn't altered.
 
-      This avoids the aggressive
-      "Detect and Remove" setting that
-      improved speed but caused buggy
-      gameplay behavior.
+      Skip one rendered frame between displayed
+      frames to reduce browser rendering load.
 
-      Frameskip remains at 0 so the
-      emulator targets the normal
-      frame rate rather than skipping
-      frames.
+      This should improve emulation speed without
+      using the aggressive CPU-loop detection that
+      made the game buggy.
     */
 
     EJS_defaultOptions = {
 
       "mgba_idle_optimization": "Remove Known",
 
-      "mgba_frameskip": "0"
+      "mgba_frameskip": "1"
 
     };
 
   </script>
 
-
-  <!--
-    Load EmulatorJS normally.
-  -->
 
   <script
     src="https://cdn.emulatorjs.org/stable/data/loader.js">
