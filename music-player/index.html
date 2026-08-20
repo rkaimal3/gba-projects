@@ -13,201 +13,44 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: transparent;
-    }
-
-    #game-shell {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
       background: #000;
     }
 
     #game {
-      width: 100%;
-      height: 100%;
-    }
-
-    #cover {
-      position: absolute;
-      inset: 0;
-      z-index: 9999;
-
-      background:
-        #000
-        url("./cover.png")
-        center / contain no-repeat;
-
-      image-rendering: pixelated;
-      cursor: pointer;
-    }
-
-    #cover::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.08;
-
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.55) 0 1px,
-        transparent 1px 4px
-      );
-    }
-
-    #click-to-play {
-      position: absolute;
-
-      /* Vertically centered inside the GBA screen */
-      top: 41.5%;
-      left: 50%;
-
-      transform: translate(-50%, -50%);
-      z-index: 10000;
-
-      color: #fff;
-
-      font-family: "Courier New", Courier, monospace;
-      font-weight: 900;
-      font-size: clamp(18px, 2.8vw, 32px);
-
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-
-      text-shadow:
-        3px 3px 0 #000,
-        -2px -2px 0 #000,
-        2px -2px 0 #000,
-        -2px 2px 0 #000;
-
-      animation: blink 1.05s steps(1, end) infinite;
-      pointer-events: none;
-    }
-
-    @keyframes blink {
-      0%,
-      64% {
-        opacity: 1;
-      }
-
-      65%,
-      100% {
-        opacity: 0;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #click-to-play {
-        animation: none;
-      }
+      width: 100vw;
+      height: 100vh;
+      background: #000;
     }
   </style>
 </head>
 
 <body>
 
-  <div id="game-shell">
-
-    <div id="game"></div>
-
-    <div
-      id="cover"
-      role="button"
-      tabindex="0"
-      aria-label="Play GBA Music Player"
-    >
-      <div id="click-to-play">
-        CLICK TO PLAY
-      </div>
-    </div>
-
-  </div>
-
+  <div id="game"></div>
 
   <script>
-    /*
-      Keep the same EmulatorJS settings as the
-      working Music Player page.
-    */
-
-    window.EJS_player = "#game";
-    window.EJS_core = "gba";
-    window.EJS_gameName = "GBA Music Player";
-    window.EJS_gameUrl = "./Project.gba";
-    window.EJS_pathtodata =
-      "https://cdn.emulatorjs.org/stable/data/";
-
-    window.EJS_startOnLoaded = true;
-
+    EJS_player = "#game";
+    EJS_core = "gba";
+    EJS_gameName = "GBA Music Player";
+    EJS_gameUrl = "./Project.gba";
+    EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
 
     /*
-      Do NOT initialize EmulatorJS until the visitor
-      clicks. This is especially important here
-      because the project relies heavily on audio.
+      IMPORTANT:
+      Do not auto-start.
+      Let EmulatorJS wait for the visitor to click,
+      so the browser can initialize audio normally.
     */
+    EJS_startOnLoaded = false;
 
-    (function () {
-
-      const cover =
-        document.getElementById("cover");
-
-      let loaded = false;
-
-
-      function startGame() {
-
-        if (loaded) return;
-
-        loaded = true;
-
-        /*
-          Remove the cover.
-        */
-
-        cover.remove();
-
-
-        /*
-          Load the same EmulatorJS loader only now,
-          after a real user interaction.
-        */
-
-        const loader =
-          document.createElement("script");
-
-        loader.src =
-          "https://cdn.emulatorjs.org/stable/data/loader.js";
-
-        document.body.appendChild(loader);
-      }
-
-
-      cover.addEventListener(
-        "click",
-        startGame
-      );
-
-
-      cover.addEventListener(
-        "keydown",
-        function (event) {
-
-          if (
-            event.key === "Enter" ||
-            event.key === " "
-          ) {
-
-            event.preventDefault();
-
-            startGame();
-          }
-        }
-      );
-
-    })();
+    /*
+      Use EmulatorJS's own start control instead of
+      our custom cover/start logic.
+    */
+    EJS_startButtonName = "CLICK TO PLAY";
   </script>
+
+  <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
 
 </body>
 </html>
