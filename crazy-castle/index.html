@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crazy Castle</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    #app {
+      position: relative;
+      width: min(100vw, calc(100vh * 1.5));
+      aspect-ratio: 3 / 2;
+      background: #000;
+      overflow: hidden;
+    }
+
+    #screen {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+      outline: none;
+      background: #000;
+    }
+
+    /* Custom title screen. This is presentation only.
+       The actual mGBA engine still starts from the user's real click. */
+    #cover {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      background: #000 url("./cover.png") center / contain no-repeat;
+      image-rendering: pixelated;
+      cursor: default;
+    }
+
+    #cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .08;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,.55) 0 1px,
+        transparent 1px 4px
+      );
+    }
+
+    #start {
+      position: absolute;
+      z-index: 12;
+      left: 50%;
+      top: 78%;
+      transform: translate(-50%, -50%);
+
+      appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+
+      color: #fff;
+      font-family: "Courier New", Courier, monospace;
+      font-size: clamp(18px, 2.8vw, 32px);
+      font-weight: 900;
+      letter-spacing: .10em;
+      white-space: nowrap;
+      cursor: pointer;
+
+      text-shadow:
+        3px 3px 0 #000,
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000;
+
+      animation: blink 1.05s steps(1, end) infinite;
+    }
+
+    #start[hidden] {
+      display: none;
+    }
+
+    #start:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 8px;
+    }
+
+    #loading {
+      position: absolute;
+      z-index: 12;
+      left: 50%;
+      top: 78%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font: 800 clamp(12px, 1.5vw, 16px)/1 "Courier New", Courier, monospace;
+      letter-spacing: .10em;
+      text-shadow: 2px 2px 0 #000;
+      white-space: nowrap;
+    }
+
+    #error {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      font: 700 14px/1.5 "Courier New", Courier, monospace;
+    }
+
+    @keyframes blink {
+      0%, 64% { opacity: 1; }
+      65%, 100% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #start { animation: none; }
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/index-BAacwQTC.js"></script>
+</head>
+
+<body>
+  <main id="app">
+    <canvas id="screen" width="240" height="160" tabindex="0"></canvas>
+
+    <div id="cover" aria-label="Crazy Castle title screen">
+      <div id="loading">LOADING…</div>
+      <button id="start" type="button" hidden>CLICK TO PLAY</button>
+    </div>
+
+    <div id="error"></div>
+  </main>
+
+</body>
+</html>
